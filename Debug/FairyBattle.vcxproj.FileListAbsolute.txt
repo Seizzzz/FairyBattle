@@ -1,0 +1,2 @@
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\Debug\Server.exe
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\Debug\Server.pdb
