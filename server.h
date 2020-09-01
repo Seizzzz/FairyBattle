@@ -19,8 +19,10 @@ public:
 	}
 	int assign(char* buf, int size, SOCKET& sock, SOCKADDR& addr);
 
+	Fairy* getEnemybyNum(const int num);
 	list<Fairy*> enemyList;
 	int constructInfo(char* buf);
+	int informReport(char* buf, const char* text);
 
 private:
 	static Server _instance;

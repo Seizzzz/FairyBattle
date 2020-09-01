@@ -10,7 +10,7 @@ using namespace std;
 class Battle
 {
 public:
-	int pk(char* buf, Fairy* f1, Fairy* f2, User* u, int type); //0 level; 1 death
+	int pk(char* buf, Fairy* const f1, Fairy* const f2, User* const u, const int type); //0 level; 1 death
 	static Battle* getInstance() {
 		return &_instance;
 	}

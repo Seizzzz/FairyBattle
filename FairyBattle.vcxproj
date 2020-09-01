@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="battle.cpp" />
+    <ClCompile Include="crc32.cpp" />
     <ClCompile Include="fairy.cpp" />
     <ClCompile Include="FairyBattle.cpp" />
     <ClCompile Include="server.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="auth.h" />
     <ClInclude Include="battle.h" />
+    <ClInclude Include="crc32.h" />
     <ClInclude Include="fairy.h" />
     <ClInclude Include="user.h" />
     <ClInclude Include="server.h" />

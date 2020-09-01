@@ -1,10 +1,12 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <list>
 #include <ctime>
 #include "fairy.h"
 using namespace std;
+
+const int numInitialFairy = 3;
 
 struct fairyInfo
 {
@@ -18,21 +20,26 @@ struct fairyInfo
 class User
 {
 public:
-	void joinLevelBattle(Fairy* otr);
-	void joinDeathBattle(Fairy* otr);
-	void giveOut(Fairy* otr);
+	void giveOut(const int num);
+	Fairy* getFairybyNum(const int num);
 	int constructInfo(char* buf);
-	int constructAttackName(char* buf, int num);
+	int constructAttackName(char* buf, const int num);
 
 	void checkNoFairy();
-	void setName(string nickname) { name = nickname; };
+	void addGiveOut();
+	void setName(const string nickname) { name = nickname; };
+	void healFairy();
 	string getName() { return name; };
 	time_t timeLastOpt;
-	vector<Fairy*> listFairy;
+	list<Fairy*> listFairy;
+	list<Fairy*> listGiveOut;
+
 	User();
 
-private:
-	string name;
 	int timesBattleTol;
 	int timesBattleSuc;
+
+	string nameCRC;
+private:
+	string name;
 };

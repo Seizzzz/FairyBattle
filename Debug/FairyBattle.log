@@ -1,7 +1,24 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(467,5): warning MSB8028: 中间目录(Debug\)包含从另一个项目(FairyBattle.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  FairyBattle.cpp
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\fairy.h(9,32): warning C4305: “初始化”: 从“double”到“float”截断
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\fairy.h(10,31): warning C4305: “初始化”: 从“double”到“float”截断
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\FairyBattle.cpp(47,22): warning C4996: 'gethostbyname': Use getaddrinfo() or GetAddrInfoW() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\FairyBattle.cpp(50,19): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
   battle.cpp
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\fairy.h(9,32): warning C4305: “初始化”: 从“double”到“float”截断
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\fairy.h(10,31): warning C4305: “初始化”: 从“double”到“float”截断
 C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(13,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(18,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(41,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(51,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(23,20): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(24,25): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(25,25): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(33,20): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(34,24): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(35,24): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(68,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(80,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\battle.cpp(81,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  server.cpp
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\fairy.h(9,32): warning C4305: “初始化”: 从“double”到“float”截断
+C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\fairy.h(10,31): warning C4305: “初始化”: 从“double”到“float”截断
+  正在生成代码...
   FairyBattle.vcxproj -> C:\Users\SLRYZD\Desktop\Github\FairyBattle\FairyBattle\Debug\Server.exe

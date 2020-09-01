@@ -9,8 +9,9 @@
 #endif
 
 char buf[BUF_SIZE];
+char host[255];
 
-void printBuf(char* buf, const int conSize)
+void printBuf(const char* buf, const int conSize)
 {
     for (int i = 0; i < conSize; ++i) {
         printf("%2.2x ", (unsigned char)buf[i]);
@@ -42,6 +43,15 @@ int main()
     addr.sin_addr.s_addr = INADDR_ANY;
     bind(sock, (SOCKADDR*)&addr, sizeof(SOCKADDR));
 
+    gethostname(host, sizeof(host));
+    hostent* _host = gethostbyname(host);
+    for (int i = 0; _host->h_addr_list[i] != NULL; ++i)
+    {
+        char* p = inet_ntoa(*(struct in_addr*)_host->h_addr_list[i]);
+        printf("Host name: %s\n", _host->h_name);
+        printf("IP Address: %s\n", p);  //获取全部ip 
+    }
+
     while (true)
     {
         int sizeRecv = recvfrom(sock, buf, BUF_SIZE, 0, (SOCKADDR*)&addr, &sizeAddr);
@@ -55,7 +65,6 @@ int main()
         sockHeder hed;
         hed.tag = ret;
         memcpy(buf, &ret, sizeof(hed));
-
         sendto(sock, buf, sizeof(hed), 0, (SOCKADDR*)&addr, sizeof(addr));
     }
 
