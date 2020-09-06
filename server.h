@@ -9,7 +9,7 @@
 #pragma comment(lib,"Ws2_32.lib")
 using namespace std;
 
-const int enemyCntDefault = 10;
+const int enemyCntDefault = 20;
 
 class Server
 {
@@ -17,12 +17,12 @@ public:
 	static Server* getInstance() {
 		return &_instance;
 	}
-	int assign(char* buf, int size, SOCKET& sock, SOCKADDR& addr);
+	int assign(char*, int, SOCKET&, SOCKADDR&);
 
-	Fairy* getEnemybyNum(const int num);
-	list<Fairy*> enemyList;
-	int constructInfo(char* buf);
-	int informReport(char* buf, const char* text);
+	Fairy* getEnemybyNum(const int);
+	list<Fairy*> listEnemy;
+	int buildInfoEnemy(char*);
+	int informReport(char*, const char*);
 
 private:
 	static Server _instance;

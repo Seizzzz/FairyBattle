@@ -12,8 +12,8 @@ int Fairy::getLevel() // 100 300 600 1000...
 	{
 		susp += 100;
 		++ans;
+		if (ans >= 15) return 15;
 	}
-	if (ans >= 15) return 15;
 	return ans;
 }
 
@@ -35,19 +35,19 @@ void Fairy::addExp(int val)
 		switch (adv) //特长额外值
 		{
 		case ATK: {
-			valueATK *= (float)pow(timesLevelUp, up);
+			valueATK *= (float)pow(timesLevelUpMain, up);
 			break;
 		}
 		case DEF: {
-			valueDEF *= (float)pow(timesLevelUp, up);
+			valueDEF *= (float)pow(timesLevelUpMain, up);
 			break;
 		}
 		case HP: {
-			valueHP *= (float)pow(timesLevelUp, up);
+			valueHP *= (float)pow(timesLevelUpMain, up);
 			break;
 		}
 		case AGL: {
-			valueAGL *= (float)pow(timesLevelUp, up);
+			valueAGL *= (float)pow(timesLevelUpMain, up);
 			break;
 		}
 		default:
@@ -59,16 +59,16 @@ void Fairy::addExp(int val)
 int Fairy::getHurt(float val) //ret=1 miss; ret=2 critical; ret=0 normal
 {
 	int rnd = rand() % 100; bool cri = false;
-	if (rnd < probMiss) return 1;
-	else if (rnd >= 100 - probCritic)
+	if (rnd < probMiss) return 1; //闪避
+	else if (rnd >= 100 - probCritic) //暴击
 	{
 		val *= timesCritical;
 		cri = true;
 	}
 
-	if (val > valueDEF)
+	if (val > valueDEF * timesDefend)
 	{
-		nowHP -= (val - valueDEF);
+		nowHP -= (val - valueDEF * timesDefend);
 		if (nowHP < 0) nowHP = 0;
 	}
 	
@@ -83,8 +83,8 @@ void Fairy::getHeal()
 
 int FairyATK::attackOtr(Fairy* otr)
 {
-	if (otr->adv == DEF) return otr->getHurt(valueATK * timesSuperior);
-	return otr->getHurt(valueATK);
+	if (otr->adv == DEF) return otr->getHurt(valueATK * timesSuperior * timesAttack);
+	return otr->getHurt(valueATK * timesAttack);
 }
 
 FairyATK::FairyATK()
@@ -94,21 +94,21 @@ FairyATK::FairyATK()
 	
 	adv = ATK;
 
-	valueATK = (float)(rand() % 50) / 10;
-	valueDEF = (float)(rand() % 30) / 10;
-	valueHP = (float)(rand() % 30) / 10;
-	valueAGL = (float)(rand() % 30) / 10;
+	valueATK = 2 + (float)(rand() % 30) / 10;
+	valueDEF = 1 + (float)(rand() % 30) / 10;
+	valueHP = 1 + (float)(rand() % 30) / 10;
+	valueAGL = 1 + (float)(rand() % 30) / 10;
 
 	nowHP = valueHP * timesHP;
 	exp = 0;
-	probCritic = 5;
-	probMiss = 5;
+	probCritic = 30;
+	probMiss = 20;
 }
 
 int FairyDEF::attackOtr(Fairy* otr)
 {
-	if (otr->adv == AGL) return otr->getHurt(valueATK * timesSuperior);
-	return otr->getHurt(valueATK);
+	if (otr->adv == AGL) return otr->getHurt(valueATK * timesSuperior * timesAttack);
+	return otr->getHurt(valueATK * timesAttack);
 }
 
 FairyDEF::FairyDEF()
@@ -118,21 +118,21 @@ FairyDEF::FairyDEF()
 	
 	adv = DEF;
 	
-	valueDEF = (float)(rand() % 50) / 10;
-	valueATK = (float)(rand() % 30) / 10;
-	valueHP = (float)(rand() % 30) / 10;
-	valueAGL = (float)(rand() % 30) / 10;
+	valueATK = 1 + (float)(rand() % 30) / 10;
+	valueDEF = 2 + (float)(rand() % 30) / 10;
+	valueHP = 1 + (float)(rand() % 30) / 10;
+	valueAGL = 1 + (float)(rand() % 30) / 10;
 
 	nowHP = valueHP * timesHP;
 	exp = 0;
-	probCritic = 5;
-	probMiss = 5;
+	probCritic = 20;
+	probMiss = 20;
 }
 
 int FairyHP::attackOtr(Fairy* otr)
 {
-	if (otr->adv == ATK) return otr->getHurt(valueATK * timesSuperior);
-	return otr->getHurt(valueATK);
+	if (otr->adv == ATK) return otr->getHurt(valueATK * timesSuperior * timesAttack);
+	return otr->getHurt(valueATK * timesAttack);
 }
 
 FairyHP::FairyHP()
@@ -142,21 +142,21 @@ FairyHP::FairyHP()
 	
 	adv = HP;
 	
-	valueHP = (float)(rand() % 50) / 10;
-	valueATK = (float)(rand() % 30) / 10;
-	valueDEF = (float)(rand() % 30) / 10;
-	valueAGL = (float)(rand() % 30) / 10;
+	valueATK = 1 + (float)(rand() % 30) / 10;
+	valueDEF = 1 + (float)(rand() % 30) / 10;
+	valueHP = 2 + (float)(rand() % 30) / 10;
+	valueAGL = 1 + (float)(rand() % 30) / 10;
 
 	nowHP = valueHP * timesHP;
 	exp = 0;
-	probCritic = 5;
-	probMiss = 5;
+	probCritic = 20;
+	probMiss = 20;
 }
 
 int FairyAGL::attackOtr(Fairy* otr)
 {
-	if (otr->adv == HP) return otr->getHurt(valueATK * timesSuperior);
-	return otr->getHurt(valueATK);
+	if (otr->adv == HP) return otr->getHurt(valueATK * timesSuperior * timesAttack);
+	return otr->getHurt(valueATK * timesAttack);
 }
 
 FairyAGL::FairyAGL()
@@ -166,25 +166,26 @@ FairyAGL::FairyAGL()
 	
 	adv = AGL;
 	
-	valueAGL = (float)(rand() % 50) / 10;
-	valueATK = (float)(rand() % 30) / 10;
-	valueDEF = (float)(rand() % 30) / 10;
-	valueHP = (float)(rand() % 30) / 10;
+	valueATK = 1 + (float)(rand() % 30) / 10;
+	valueDEF = 1 + (float)(rand() % 30) / 10;
+	valueHP = 1 + (float)(rand() % 30) / 10;
+	valueAGL = 2 + (float)(rand() % 30) / 10;
 
 	nowHP = valueHP * timesHP;
 	exp = 0;
-	probCritic = 5;
-	probMiss = 5;
+	probCritic = 20;
+	probMiss = 30;
 }
 
 int FairyEnemy::attackOtr(Fairy* otr)
 {
-	return otr->getHurt(valueATK);
+	return otr->getHurt(valueATK * timesAttack);
 }
 
 FairyEnemy::FairyEnemy()
 {
 	name = enemyName[rand() % enemyCnt];
+	attackName = "怪物撕咬";
 	
 	adv = (advantage)((rand() % 4) + 1);
 	valueHP = (float)(rand() % 20) / 10;
@@ -193,9 +194,35 @@ FairyEnemy::FairyEnemy()
 	valueDEF = (float)(rand() % 20) / 10;
 
 	nowHP = valueHP * timesHP;
-	probCritic = 5;
-	probMiss = 5;
+	probCritic = 20;
+	probMiss = 20;
 
 	exp = 0;
-	addExp(rand() % 2000);
+	addExp(rand() % 8000);
+	getHeal();
+}
+
+int FairyDummy::attackOtr(Fairy* const otr)
+{
+	return otr->getHurt(0);
+}
+
+FairyDummy::FairyDummy()
+{
+	name = "假人";
+	attackName = "假人";
+
+	adv = (advantage)((rand() % 4) + 1);
+	valueHP = 0.1;
+	valueATK = 0;
+	valueAGL = 0;
+	valueDEF = 0;
+
+	nowHP = valueHP * timesHP;
+	probCritic = 0;
+	probMiss = 0;
+
+	exp = 0;
+	addExp(50000);
+	getHeal();
 }

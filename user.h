@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <list>
 #include <ctime>
 #include "fairy.h"
@@ -20,21 +21,25 @@ struct fairyInfo
 class User
 {
 public:
-	void giveOut(const int num);
-	Fairy* getFairybyNum(const int num);
-	int constructInfo(char* buf);
-	int constructAttackName(char* buf, const int num);
+	void giveOut(const int);
+	Fairy* getFairybyNum(const int);
+	int buildInfoFairy(char*);
+	int buildInfoBadage(char*);
+	int buildInfoAttack(char*, const int);
 
 	void checkNoFairy();
 	void addGiveOut();
 	void setName(const string nickname) { name = nickname; };
 	void healFairy();
+	void getBadage();
 	string getName() { return name; };
 	time_t timeLastOpt;
 	list<Fairy*> listFairy;
 	list<Fairy*> listGiveOut;
+	vector<string> vecBadage;
 
 	User();
+	~User();
 
 	int timesBattleTol;
 	int timesBattleSuc;

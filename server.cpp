@@ -32,7 +32,7 @@ int Server::assign(char* buf, int size, SOCKET& sock, SOCKADDR& addr)
 		auto ptrUser = Auth::getInstance()->savedataMap.find(to_string(hed->username));
 		if (ptrUser != Auth::getInstance()->savedataMap.end()) //找到了用户
 		{
-			srvhed->cnt = ptrUser->second->constructInfo((char*)srvhed + sizeof(sockHeder));
+			srvhed->cnt = ptrUser->second->buildInfoFairy((char*)srvhed + sizeof(sockHeder));
 		}
 		sendto(sock, buf, sizeof(sockHeder) + (hed->cnt * 44), 0, (SOCKADDR*)&addr, sizeof(addr));
 
@@ -49,7 +49,7 @@ int Server::assign(char* buf, int size, SOCKET& sock, SOCKADDR& addr)
 	case 5: { //发送决斗场列表
 		sockHeder* srvhed = (sockHeder*)buf;
 		srvhed->tag = 107;
-		srvhed->cnt = constructInfo((char*)srvhed + sizeof(sockHeder));
+		srvhed->cnt = buildInfoEnemy((char*)srvhed + sizeof(sockHeder));
 		sendto(sock, buf, sizeof(sockHeder) + (hed->cnt * 44), 0, (SOCKADDR*)&addr, sizeof(addr));
 		break;
 	}
@@ -60,7 +60,7 @@ int Server::assign(char* buf, int size, SOCKET& sock, SOCKADDR& addr)
 			sockHeder* srvhed = (sockHeder*)buf;
 			srvhed->tag = 108;
 			auto ptrUser = Auth::getInstance()->savedataMap.find(to_string(hed->username));
-			if (ptrUser != Auth::getInstance()->savedataMap.end()) ptrUser->second->constructAttackName((char*)srvhed + sizeof(sockHeder), srvhed->cnt);
+			if (ptrUser != Auth::getInstance()->savedataMap.end()) ptrUser->second->buildInfoAttack((char*)srvhed + sizeof(sockHeder), srvhed->cnt);
 			sendto(sock, buf, sizeof(sockHeder) + 16, 0, (SOCKADDR*)&addr, sizeof(addr));
 		}
 		break;
@@ -118,9 +118,26 @@ int Server::assign(char* buf, int size, SOCKET& sock, SOCKADDR& addr)
 			sockHeder* srvhed = (sockHeder*)buf;
 			srvhed->tag = 112;
 			auto ptrUser = Auth::getInstance()->savedataMap.find(to_string(hed->username));
-			if (ptrUser != Auth::getInstance()->savedataMap.end()) ptrUser->second->healFairy();
+			if (ptrUser != Auth::getInstance()->savedataMap.end())
+			{
+				ptrUser->second->healFairy();
+				sendto(sock, buf, sizeof(sockHeder), 0, (SOCKADDR*)&addr, sizeof(addr));
+			}
+		}
+		break;
+	}
 
-			sendto(sock, buf, sizeof(sockHeder), 0, (SOCKADDR*)&addr, sizeof(addr));
+	case 11: { //徽章
+		if (Auth::getInstance()->verify(to_string(hed->username), to_string(hed->password)) == 101)
+		{
+			sockHeder* srvhed = (sockHeder*)buf;
+			srvhed->tag = 113;
+			auto ptrUser = Auth::getInstance()->savedataMap.find(to_string(hed->username));
+			if (ptrUser != Auth::getInstance()->savedataMap.end())
+			{
+				srvhed->cnt = ptrUser->second->buildInfoBadage((char*)srvhed + sizeof(sockHeder));
+				sendto(sock, buf, sizeof(sockHeder) + srvhed->cnt * 32, 0, (SOCKADDR*)&addr, sizeof(addr));
+			}
 		}
 		break;
 	}
@@ -131,14 +148,14 @@ int Server::assign(char* buf, int size, SOCKET& sock, SOCKADDR& addr)
 
 Fairy* Server::getEnemybyNum(const int num)
 {
-	auto enemy = enemyList.begin(); advance(enemy, num);
+	auto enemy = listEnemy.begin(); advance(enemy, num);
 	return *enemy;
 }
 
-int Server::constructInfo(char* buf)
+int Server::buildInfoEnemy(char* buf)
 {
 	fairyInfo* ptr = (fairyInfo*)buf;
-	for (auto i : enemyList)
+	for (auto i : listEnemy)
 	{
 		strcpy_s(ptr->name, 16, i->name.c_str());
 		ptr->adv = i->adv;
@@ -151,7 +168,7 @@ int Server::constructInfo(char* buf)
 		++ptr;
 	}
 
-	return enemyList.size();
+	return listEnemy.size();
 }
 
 int Server::informReport(char* buf, const char* text)
@@ -162,12 +179,13 @@ int Server::informReport(char* buf, const char* text)
 
 Server::Server()
 {
-	for (int i = 0; i < enemyCntDefault; ++i) enemyList.push_back(new FairyEnemy);
+	listEnemy.push_back(new FairyDummy);
+	for (int i = 0; i < enemyCntDefault; ++i) listEnemy.push_back(new FairyEnemy);
 }
 
 Server::~Server()
 {
-	for (auto i : enemyList)
+	for (auto i : listEnemy)
 	{
 		delete i;
 	}

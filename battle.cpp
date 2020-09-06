@@ -36,7 +36,7 @@ int Battle::pk(char* buf, Fairy* const fairy, Fairy* const enemy, User* const us
 			buf += strlen(buf);
 		}
 
-		if (fairy->nowHP <= 0)
+		if (fairy->nowHP <= 0) //精灵死亡
 		{
 			if (type == 0) //用户升级赛败
 			{ 
@@ -55,15 +55,21 @@ int Battle::pk(char* buf, Fairy* const fairy, Fairy* const enemy, User* const us
 				break;
 			}
 		}
-		else if (enemy->nowHP <= 0)
+		else if (enemy->nowHP <= 0) //怪物死亡
 		{
 			if (type == 0) //用户升级赛胜
 			{
 				++user->timesBattleSuc;
 				++user->timesBattleTol;
 				fairy->addExp(enemy->getLevel() * 100);
-				Server::getInstance()->enemyList.remove(enemy);
-				Server::getInstance()->enemyList.push_back(new FairyEnemy);
+
+				if (enemy->name != "假人")
+				{
+					delete enemy;
+					Server::getInstance()->listEnemy.remove(enemy);
+					Server::getInstance()->listEnemy.push_back(new FairyEnemy);
+				}	
+
 				strcat_s(buf, BUF_SIZE, "升级赛成功！\n"); buf += strlen(buf);
 				sprintf(buf, "获得经验%d点！\n", enemy->getLevel() * 100); buf += strlen(buf);
 				break;
@@ -73,9 +79,11 @@ int Battle::pk(char* buf, Fairy* const fairy, Fairy* const enemy, User* const us
 				++user->timesBattleSuc;
 				++user->timesBattleTol;
 				fairy->addExp(enemy->getLevel() * 100);
+
 				user->listFairy.push_back(enemy);
-				Server::getInstance()->enemyList.remove(enemy);
-				Server::getInstance()->enemyList.push_back(new FairyEnemy);
+				Server::getInstance()->listEnemy.remove(enemy);
+				Server::getInstance()->listEnemy.push_back(new FairyEnemy);
+
 				strcat_s(buf, BUF_SIZE, "决斗赛成功！\n"); buf += strlen(buf);
 				sprintf(buf, "获得经验%d点！\n", enemy->getLevel() * 100); buf += strlen(buf);
 				sprintf(buf, "获得了新精灵\"%s\"！\n", enemy->name.c_str()); buf += strlen(buf);

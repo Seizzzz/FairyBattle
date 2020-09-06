@@ -32,7 +32,7 @@ Fairy* User::getFairybyNum(const int num)
 	}
 }
 
-int User::constructInfo(char* buf)
+int User::buildInfoFairy(char* buf)
 {
 	fairyInfo* ptr = (fairyInfo*)buf;
 
@@ -72,7 +72,20 @@ int User::constructInfo(char* buf)
 	}
 }
 
-int User::constructAttackName(char* buf, const int num)
+int User::buildInfoBadage(char* buf)
+{
+	getBadage();
+	
+	for (auto i : vecBadage)
+	{
+		strcpy_s(buf, 32, i.c_str());
+		buf += 32;
+	}
+
+	return vecBadage.size();
+}
+
+int User::buildInfoAttack(char* buf, const int num)
 {
 	auto fairy = getFairybyNum(num);
 	strcpy_s(buf, 16, fairy->attackName.c_str());
@@ -129,6 +142,26 @@ void User::healFairy()
 	for (auto i : listFairy) i->getHeal();
 }
 
+void User::getBadage()
+{
+	vecBadage.clear();
+	int highLevel = 0;
+	int cntFairy = listFairy.size();
+
+	for (auto i : listFairy)
+	{
+		if (i->getLevel() == 15) ++highLevel;
+	}
+
+	if (cntFairy >= 10) vecBadage.push_back("金质宠物个数徽章");
+	else if (cntFairy >= 5) vecBadage.push_back("银质宠物个数徽章");
+	else if (cntFairy >= 3) vecBadage.push_back("铜质宠物个数徽章");
+
+	if (highLevel >= 10) vecBadage.push_back("金质高级宠物徽章");
+	else if (highLevel >= 5) vecBadage.push_back("银质高级宠物徽章");
+	else if (highLevel >= 3) vecBadage.push_back("铜质高级宠物徽章");
+}
+
 User::User()
 {
 	timesBattleSuc = timesBattleTol = 0;
@@ -145,4 +178,10 @@ User::User()
 	}
 
 	time(&timeLastOpt);
+}
+
+User::~User()
+{
+	for (auto i : listFairy) delete i;
+	for (auto i : listGiveOut) delete i;
 }

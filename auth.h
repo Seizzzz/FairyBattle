@@ -19,12 +19,12 @@ struct infoOnlinePlayer
 class Auth
 {
 public:
-	int regist(const string username, const string password, const char* nickname);
-	int login(const string username, const string password);
-	int logout(const string username, const string password);
-	int verify(const string username, const string password);
+	int regist(const string , const string, const char*);
+	int login(const string, const string);
+	int logout(const string, const string);
+	int verify(const string, const string);
 	list<User*> onlineList;
-	int getOnlinePlayer(char* buf);
+	int getOnlinePlayer(char*);
 	map<string, string> registMap; //由用户名映射至密码
 	map<string, User*> savedataMap; //由用户名映射至用户类
 	int saveMap();
